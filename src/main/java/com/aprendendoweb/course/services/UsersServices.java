@@ -45,9 +45,15 @@ public class UsersServices {
 	}
 	
 	public Users update(Long id, Users obj) {
+		try {
 		Users entity = repository.getOne(id);
 		updateData(entity,obj);
 		return repository.save(entity);
+		}
+		catch(RuntimeException e) {
+			e.printStackTrace();
+			throw new ResourceNotFoundException(id);
+		}
 	}
 
 	private void updateData(Users entity, Users obj) {
